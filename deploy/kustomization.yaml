@@ -1,0 +1,5 @@
+resources:
+  - configmap.yaml
+  - monitor-view-binding.yaml
+  - sa.yaml
+  - deployment.yaml

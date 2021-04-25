@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metric-test
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: metrics-test
+  template:
+    metadata:
+      labels:
+        component: metrics-test
+    spec:
+      containers:
+        - command:
+            - /metric-test
+          image: quay.io/zhiweiyin/metric-test:latest
+          imagePullPolicy: Always
+          name: metric-test
+          volumeMounts:
+            - mountPath: /etc/metrics-test-ca
+              name: metrics-test-ca
+      serviceAccount: metrics-test-sa
+      serviceAccountName: metrics-test-sa
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: metrics-test-ca
+          name: metrics-test-ca
